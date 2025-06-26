@@ -1,100 +1,8 @@
-// import React, { useState, useCallback } from 'react';
-// import {
-//   View,
-//   Text,
-//   StyleSheet,
-//   ScrollView,
-//   RefreshControl,
-//   Dimensions,
-//   SafeAreaView,
-//   TouchableOpacity,
-// } from 'react-native';
-// import { ImageGrid } from '@/components/ImageGrid';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { HeroSection } from '@/components/HeroSection';
-
-// const { width: screenWidth } = Dimensions.get('window');
-
-// export default function DiscoverTab() {
-//   const [refreshing, setRefreshing] = useState(false);
-
-//   const onRefresh = useCallback(() => {
-//     setRefreshing(true);
-//     // Simulate refresh delay
-//     setTimeout(() => {
-//       setRefreshing(false);
-//     }, 1000);
-//   }, []);
-
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <ScrollView
-//         style={styles.scrollView}
-//         showsVerticalScrollIndicator={false}
-//         refreshControl={
-//           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-//         }>
-//         <View style={styles.header}>
-//           <Text style={styles.headerTitle}>Discover</Text>
-//           <Text style={styles.headerSubtitle}>Beautiful things around you</Text>
-//         </View>
-        
-//         <ImageGrid />
-//         <HeroSection />
-        
-//         <View style={styles.footer}>
-//           <Text style={styles.footerText}>Pull down to refresh • More content loading...</Text>
-//         </View>
-
-//         <TouchableOpacity onPress={() => AsyncStorage.removeItem('onboardingCompleted')}>
-//   <Text>Reset Onboarding</Text>
-// </TouchableOpacity>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#FFFFFF',
-//   },
-//   scrollView: {
-//     flex: 1,
-//   },
-//   header: {
-//     paddingHorizontal: 20,
-//     paddingTop: 20,
-//     paddingBottom: 24,
-//   },
-//   headerTitle: {
-//     fontSize: 32,
-//     fontWeight: '700',
-//     color: '#1F2937',
-//     marginBottom: 4,
-//   },
-//   headerSubtitle: {
-//     fontSize: 16,
-//     color: '#6B7280',
-//     fontWeight: '400',
-//   },
-//   footer: {
-//     paddingHorizontal: 20,
-//     paddingVertical: 40,
-//     alignItems: 'center',
-//   },
-//   footerText: {
-//     fontSize: 14,
-//     color: '#9CA3AF',
-//     textAlign: 'center',
-//   },
-// });
-
-
 // App.js
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, TextInput, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
 const categories = [
   { id: '1', name: 'Furnitures', icon: 'https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-furniture-interior-design-flatart-icons-outline-flatarticons.png' },
@@ -165,17 +73,25 @@ export default function App() {
           )}
         />
 
-        <Text style={styles.sectionTitle}>SHOP ALL PRODUCTS</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>SHOP ALL PRODUCTS</Text>
+          <TouchableOpacity onPress={() => router.push('/products')}>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
+        </View>
         <FlatList
           horizontal
           data={products}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <TouchableOpacity 
+              style={styles.card}
+              onPress={() => router.push('/products')}
+            >
               <Image source={item.image} style={styles.image} />
               <Text>{item.title}</Text>
               <Text>{item.price}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         />
 
@@ -340,11 +256,24 @@ const styles = StyleSheet.create({
   categoryText: {
     fontSize: 12,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 15,
+    marginHorizontal: 10,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 15,
     marginHorizontal: 10,
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: '#E07B39',
+    fontWeight: '600',
+    marginRight: 10,
   },
   filterButton: {
     backgroundColor: '#eee',

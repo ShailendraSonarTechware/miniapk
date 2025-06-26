@@ -25,11 +25,12 @@ export default function RootLayout() {
       <StatusBar style="auto" />
       <Stack screenOptions={{ headerShown: false }} initialRouteName={initialRoute}>
         <Stack.Screen name="onboarding/Onboarding1" />
-        {/* <Stack.Screen name="onboarding/Onboarding2" />
-        <Stack.Screen name="onboarding/Onboarding3" /> */}
         <Stack.Screen name="onboarding/Onboarding4" />
         <Stack.Screen name="auth/Login" />
         <Stack.Screen name="auth/Signup" />
+        <Stack.Screen name="auth/SignupVendor" />
+        <Stack.Screen name="auth/ForgotPassword" />
+        <Stack.Screen name="products/index" />
         <Stack.Screen name="(tabs)" />
       </Stack>
     </>
